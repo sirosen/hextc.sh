@@ -5,17 +5,12 @@ set -euo pipefail
 hexcolor="$1"
 shift 1
 
-for_shell=bash
 style="fg"
 
 while [ $# -gt 0 ]; do
   arg="$1"
   shift 1
   case "$arg" in
-    "--shell")
-      for_shell="$1"
-      shift 1
-      ;;
     "--bg")
       style="bg"
       ;;
@@ -40,14 +35,18 @@ _dehexcolor () {
   fi
 }
 
-if [ "$for_shell" = "zsh" ]; then
-  echo -n "%{"
-fi
+_zsh_echo () {
+  set +u
+  if echo "$SHELL" | grep "zsh" > /dev/null; then
+    echo -n "$1"
+  fi
+  set -u
+}
+
+_zsh_echo '%{'
 if [ "$hexcolor" = "reset" ]; then
   printf "\x1b[0m"
 else
   _dehexcolor "$hexcolor" "$style"
 fi
-if [ "$for_shell" = "zsh" ]; then
-  echo -n "%}"
-fi
+_zsh_echo '%}'
