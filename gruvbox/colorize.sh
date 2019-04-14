@@ -5,6 +5,7 @@ cd "$(dirname "$0")"
 
 _colormap () {
   case "$1" in
+    reset) echo "reset" ;;
     bg0_h) echo "1d2021" ;;
     bg|bg0) echo "282828" ;;
     bg0_s) echo "32302f" ;;
@@ -37,4 +38,4 @@ _colormap () {
 
 colorname="$1"
 shift 1
-./hextc.sh "$(_colormap "$colorname")" "$@"
+../hextc.sh "$(_colormap "$colorname")" "$@"
