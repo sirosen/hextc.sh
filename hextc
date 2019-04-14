@@ -37,6 +37,9 @@ _dehexcolor () {
 
 _zsh_echo () {
   set +u
+  # somewhat clumsy detection, but basically the result of `SHELL` being
+  # preserved when a subprocess executes (whereas ZSH_VERISON, BASH_VERSION,
+  # etc. are not preserved)
   if echo "$SHELL" | grep "zsh" > /dev/null; then
     echo -n "$1"
   fi
@@ -44,9 +47,15 @@ _zsh_echo () {
 }
 
 _zsh_echo '%{'
-if [ "$hexcolor" = "reset" ]; then
-  printf "\x1b[0m"
-else
-  _dehexcolor "$hexcolor" "$style"
-fi
+case "$hexcolor" in
+  reset)
+    tput sgr0
+    ;;
+  bold)
+    tput bold
+    ;;
+  *)
+    _dehexcolor "$hexcolor" "$style"
+    ;;
+esac
 _zsh_echo '%}'
