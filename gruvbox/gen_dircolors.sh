@@ -3,131 +3,40 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-_gruvbox_map () {
-  case "$1" in
-    bg0_h) echo "1d2021" ;;
-    bg|bg0) echo "282828" ;;
-    bg0_s) echo "32302f" ;;
-    bg1) echo "3c3836" ;;
-    bg2) echo "504945" ;;
-    bg3) echo "665c54" ;;
-    bg4) echo "7c6f64" ;;
-    fg0) echo "fbf1c7" ;;
-    fg|fg1) echo "ebdbb2" ;;
-    fg2) echo "d5c4a1" ;;
-    fg3) echo "bdae93" ;;
-    fg4|lightgrey|lightgray) echo "a89984" ;;
-    grey|gray) echo "928374" ;;
-    red) echo "cc241d" ;;
-    brightred) echo "fb4934" ;;
-    green) echo "98971a" ;;
-    brightgreen) echo "b8bb26" ;;
-    yellow) echo "d79921" ;;
-    brightyellow) echo "fabd2f" ;;
-    orange) echo "d65d0e" ;;
-    brightorange) echo "fe8019" ;;
-    blue) echo "458588" ;;
-    brightblue) echo "83a598" ;;
-    purple) echo "b16286" ;;
-    brightpurple) echo "d3869b" ;;
-    aqua) echo "689d6a" ;;
-    brightaqua) echo "83c07c" ;;
-  esac
-}
-
 _gruv () {
   local hexcolor
-  hexcolor="$(_gruvbox_map "$1")"
+  hexcolor="$(./dark_colorname.sh "$1")"
   shift 1
   ../hextc "$hexcolor" --dircolors "$@"
 }
 
 cat <<EOH
-# 'tty' colorizes output to ttys, but not pipes. 'all' adds color characters to all output. 'none' shuts colorization
-# off.
+# colorize output to ttys, but not pipes
 COLOR tty
 
-# Below, there should be one TERM entry for each termtype that is colorizable
-TERM ansi
-TERM color_xterm
-TERM color-xterm
-TERM con132x25
-TERM con132x30
-TERM con132x43
-TERM con132x60
-TERM con80x25
-TERM con80x28
-TERM con80x30
-TERM con80x43
-TERM con80x50
-TERM con80x60
-TERM cons25
-TERM console
-TERM cygwin
-TERM dtterm
-TERM dvtm
-TERM dvtm-256color
-TERM Eterm
-TERM eterm-color
-TERM fbterm
-TERM gnome
-TERM gnome-256color
-TERM jfbterm
-TERM konsole
-TERM konsole-256color
-TERM kterm
-TERM linux
-TERM linux-c
-TERM mach-color
-TERM mlterm
-TERM nxterm
-TERM putty
-TERM putty-256color
-TERM rxvt
-TERM rxvt-256color
-TERM rxvt-cygwin
-TERM rxvt-cygwin-native
-TERM rxvt-unicode
-TERM rxvt-unicode256
-TERM rxvt-unicode-256color
-TERM screen
-TERM screen-16color
-TERM screen-16color-bce
-TERM screen-16color-s
-TERM screen-16color-bce-s
-TERM screen-256color
-TERM screen-256color-bce
-TERM screen-256color-s
-TERM screen-256color-bce-s
-TERM screen-256color-italic
-TERM screen-bce
-TERM screen-w
-TERM screen.linux
-TERM screen.xterm-256color
-TERM screen.xterm-new
-TERM st
-TERM st-meta
-TERM st-256color
-TERM st-meta-256color
-TERM tmux
-TERM tmux-256color
-TERM vt100
-TERM xterm
-TERM xterm-new
-TERM xterm-16color
-TERM xterm-256color
-TERM xterm-256color-italic
-TERM xterm-88color
-TERM xterm-color
-TERM xterm-debian
-TERM xterm-termite
+# one TERM entry for each termtype that is colorizable
+$(for term in \
+  ansi color_xterm color-xterm \
+  con132x25 con132x30 con132x43 con132x60 con80x25 con80x28 con80x30 con80x43 \
+  con80x50 con80x60 cons25 console cygwin dtterm dvtm dvtm-256color Eterm \
+  eterm-color fbterm gnome gnome-256color jfbterm konsole konsole-256color \
+  kterm linux linux-c mach-color mlterm nxterm putty putty-256color rxvt \
+  rxvt-256color rxvt-cygwin rxvt-cygwin-native rxvt-unicode rxvt-unicode256 \
+  rxvt-unicode-256color screen screen-16color screen-16color-bce \
+  screen-16color-s screen-16color-bce-s screen-256color screen-256color-bce \
+  screen-256color-s screen-256color-bce-s screen-256color-italic screen-bce \
+  screen-w screen.linux screen.xterm-256color screen.xterm-new st st-meta \
+  st-256color st-meta-256color tmux tmux-256color vt100 xterm xterm-new \
+  xterm-16color xterm-256color xterm-256color-italic xterm-88color \
+  xterm-color xterm-debian xterm-termite ; do
+  echo "TERM $term"
+done)
 
 # EIGHTBIT, followed by '1' for on, '0' for off. (8-bit output)
 EIGHTBIT 1
 
-# global default
+# global default, normal files
 NORMAL 00
-# normal file
 FILE 00
 
 # directory
