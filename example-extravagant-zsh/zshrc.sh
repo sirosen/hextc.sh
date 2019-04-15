@@ -9,7 +9,6 @@ setopt prompt_subst
 
 _gruvbox_map () {
   case "$1" in
-    reset) echo "reset" ;;
     bg0_h) echo "1d2021" ;;
     bg|bg0) echo "282828" ;;
     bg0_s) echo "32302f" ;;
@@ -63,7 +62,9 @@ _color_text () {
   done
   echo -n "%}"
   echo -n "$text"
+  echo -n "%{"
   hextc "reset"
+  echo -n "%}"
 }
 
 # part of the prompt is exit code when nonzero

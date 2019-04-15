@@ -6,11 +6,15 @@ hexcolor="$1"
 shift 1
 
 style="fg"
+dircolors=0
 
 while [ $# -gt 0 ]; do
   arg="$1"
   shift 1
   case "$arg" in
+    "--dircolors")
+      dircolors=1
+      ;;
     "--bg")
       style="bg"
       ;;
@@ -28,10 +32,18 @@ _dehexcolor () {
   g=$((16#$g))
   b="$(cut -c5-6 <<< "$1")"
   b=$((16#$b))
+  if [ "$dircolors" -ne 1 ]; then
+    printf "\x1b["
+  fi
+
   if [ -n "$2" ] && [ "$2" = "bg" ]; then
-    printf "\x1b[48;2;%s;%s;%sm" "$r" "$g" "$b"
+    printf "48;2;%s;%s;%s" "$r" "$g" "$b"
   else
-    printf "\x1b[38;2;%s;%s;%sm" "$r" "$g" "$b"
+    printf "38;2;%s;%s;%s" "$r" "$g" "$b"
+  fi
+
+  if [ "$dircolors" -ne 1 ]; then
+    printf "m"
   fi
 }
 
