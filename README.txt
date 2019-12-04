@@ -1,3 +1,7 @@
+NOTE:
+I have moved this project into part of my current dotfiles tracking here:
+  https://github.com/sirosen/dotfiles/tree/master/zsh/.hextc
+
 hextc.sh
 ========
 
