@@ -70,7 +70,7 @@ done)
 $(for key in \
   .h .hpp .c .C .cc .cpp .cxx .objc .cl \
   .sh .bash .csh .zsh \
-  .el .vim .java .pl .pm .py .rb \
+  .el .vim .java .pl .pm .py .rb .jinja2 \
   .hs .php .htm .html .shtml .erb .haml \
   .xml .rdf .css .sass .scss .less .js .coffee .man \
   ".0" ".1" ".2" ".3" ".4" ".5" ".6" ".7" ".8" ".9" \
